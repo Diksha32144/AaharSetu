@@ -1,122 +1,73 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import { Utensils, MapPin, User, Phone, HeartHandshake } from 'lucide-react';
+import FoodMap from './components/FoodMap';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [foodPosts, setFoodPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null);
+
+  // Fetch available food posts from your backend
+  useEffect(() => {
+    fetch('http://localhost:5000/api/food')
+      .then((res) => res.json())
+      .then((data) => setFoodPosts(data))
+      .catch((err) => console.error('Error fetching food posts:', err));
+  }, []);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app-container">
+      {/* Pastel Header */}
+      <header className="navbar">
+        <div className="icon-row">
+          <HeartHandshake size={32} className="icon-mint" />
+          <div>
+            <h1 className="brand-title">AaharSetu</h1>
+            <p className="brand-subtitle">Connecting surplus food with people nearby</p>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        <span className="badge-count icon-row">
+          <Utensils size={16} />
+          {foodPosts.length} Available Meals
+        </span>
+      </header>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {/* Interactive Map */}
+      <FoodMap
+        foodPosts={foodPosts}
+        selectedPost={selectedPost}
+        onSelectPost={setSelectedPost}
+      />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Interactive Food Cards */}
+      <h2 className="section-heading">
+        Available Donations (Click a card to locate on map)
+      </h2>
+
+      <div className="food-grid">
+        {foodPosts.map((post) => (
+          <div
+            key={post.id}
+            className={`food-card ${selectedPost?.id === post.id ? 'selected' : ''}`}
+            onClick={() => setSelectedPost(post)}
+          >
+            <span className="food-tag">{post.quantity}</span>
+            <h3>{post.food_title}</h3>
+
+            <p className="icon-row">
+              <MapPin size={16} className="icon-peach" />
+              <span>{post.address}</span>
+            </p>
+
+            <p className="icon-row">
+              <User size={16} className="icon-mint" />
+              <span>{post.donor_name}</span>
+              <Phone size={14} className="icon-mint" />
+              <span>{post.donor_phone}</span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
-
-export default App

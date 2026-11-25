@@ -40,10 +40,9 @@ export default function FoodMap({ foodPosts, selectedPost, onSelectPost }) {
           zoom={13}
           style={{ height: '100%', width: '100%' }}
         >
-          {/* Soft-toned map tiles matching our pastel theme */}
-          <TileLayer
-            attribution='© OpenStreetMap contributors © CARTO'
-            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+         <TileLayer
+            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
           <FlyToLocation selectedPost={selectedPost} />
