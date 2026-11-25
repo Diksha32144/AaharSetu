@@ -1,0 +1,141 @@
+:root {
+  --bg-cream: #fffbf5;
+  --card-white: #ffffff;
+  --pastel-mint: #7fb093;
+  --pastel-mint-light: #e4f1ea;
+  --pastel-peach: #f4a28c;
+  --pastel-peach-light: #fdece8;
+  --text-dark: #3a3a3a;
+  --text-muted: #6e6e6e;
+  --border-soft: #eadfd5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.app-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.navbar {
+  background-color: var(--card-white);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-title {
+  font-size: 1.5rem;
+  color: var(--pastel-mint);
+}
+
+.brand-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.badge-count {
+  background-color: var(--pastel-peach-light);
+  color: #b85d43;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.map-card {
+  background-color: var(--card-white);
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 24px;
+}
+
+.map-wrapper {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.section-heading {
+  font-size: 1.15rem;
+  margin-bottom: 14px;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.food-card {
+  background-color: var(--card-white);
+  border: 2px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.food-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--pastel-mint);
+}
+
+.food-card.selected {
+  border-color: var(--pastel-peach);
+}
+
+.food-tag {
+  display: inline-block;
+  background-color: var(--pastel-mint-light);
+  color: #48755b;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.food-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.food-card p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.icon-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-mint {
+  color: var(--pastel-mint);
+  flex-shrink: 0;
+}
+
+.icon-peach {
+  color: var(--pastel-peach);
+  flex-shrink: 0;
+}
